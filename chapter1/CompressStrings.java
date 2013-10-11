@@ -1,6 +1,15 @@
 package chapter1;
-
+/**
+ * 
+ * Implement a method to perform basic string compression using the counts of repeated characters.
+ * aabcccccaaa compressed to a2b1c5a3.
+ * If the copressed string would not become smaller than the origianl string, you method should return the original string.
+ *
+ */
 public class CompressStrings {
+	
+	//running time too long 
+	//O(n + m^2) n is the string length, m is the number of character sequences 
 	public String compressBad(String str){
 		if(str.length() == 0){
 			return str;
@@ -13,7 +22,7 @@ public class CompressStrings {
 			if(str.charAt(i) == last){
 				count++;
 			} else {
-				mystr += last + "" + count;
+				mystr += last + "" + count;//without "", myster will be integer
 				last = str.charAt(i);
 				count = 1;
 			}

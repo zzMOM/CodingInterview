@@ -35,7 +35,7 @@ public class MainTest {
 		String cs5 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaab";
 		String cs6 = "daaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
 		CompressStrings cs = new CompressStrings();
-		System.out.println("string: " + cs1);
+		/*System.out.println("string: " + cs1);
 		System.out.println("Bad" + "  " + cs.compressBad(cs1));
 		System.out.println("Better" + "  " + cs.compressBetter(cs1));
 		System.out.println("Alternate" + "  " + cs.compressAlternate(cs1));
@@ -58,7 +58,37 @@ public class MainTest {
 		System.out.println("string: " + cs6);
 		System.out.println("Bad" + "  " + cs.compressBad(cs6));
 		System.out.println("Better" + "  " + cs.compressBetter(cs6));
-		System.out.println("Alternate" + "  " + cs.compressAlternate(cs6));
+		System.out.println("Alternate" + "  " + cs.compressAlternate(cs6));*/
+		
+		//RowColZeros
+		int[][] matrix = new int[15][10];
+		for(int i = 0; i < matrix.length; i++){
+			for(int j = 0; j < matrix[0].length; j++){
+				matrix[i][j] = j - 2 * i;
+			}
+		}
+		RowColZeros rcz = new RowColZeros();
+		rcz.setZeros1(matrix);
+		rcz.setZeros2(matrix);
+		
+		//RotationStrings
+		RotationStrings rs = new RotationStrings();
+		/*substring testing
+		String mainStr ="staarting from herre";
+		String s1 = "s";
+		String s2 = "x";
+		String s3 = "re";
+		String s4 = "tar";
+		String s5 = "here";
+		System.out.println(rs.isSubstring2(mainStr, s1));
+		System.out.println(rs.isSubstring2(mainStr, s2));
+		System.out.println(rs.isSubstring2(mainStr, s3));
+		System.out.println(rs.isSubstring2(mainStr, s4));
+		System.out.println(rs.isSubstring2(mainStr, s5));*/
+		/*check string rotation*/
+		String sa = "waterbottle";
+		String sb = "erbottlewat";
+		System.out.println(rs.isRotation(sa, sb));
 	}
 
 }

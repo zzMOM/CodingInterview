@@ -1,5 +1,12 @@
 package chapter1;
 
+/**
+ * 
+ * 1.4 Write a method to replace all spaces in a string with %20.
+ * Assume that the string has sufficient space at the end of the string to hold the additional characters,
+ * and that they are given the true length of the strings.
+ *
+ */
 public class ReplaceSpaceString {
 	public char[] replaceSpace1(char[] str, int length){
 		int spaceCount = 0, newLength, i = 0;
