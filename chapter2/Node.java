@@ -1,11 +1,11 @@
 package chapter2;
 
-public class Node<T> {
-	private T data;
-	private Node<T> next;
+public class Node<E> {
+	E elem;
+	Node<E> next;
 	
-	public Node(T data, Node<T> next){
-		this.data = data;
-		this.next = next;
+	public Node(E elem){
+		this.elem = elem;
+		this.next = null;
 	}
 }
