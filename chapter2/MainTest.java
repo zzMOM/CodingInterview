@@ -15,10 +15,8 @@ public class MainTest {
 		
 		//RemoveDuplicates
 		RemoveDuplicates rd = new RemoveDuplicates();
-		int size = strLinkedList.size();
-		for(int i = 0; i < size; i++){
-			rd.deleteDups1(n);
-		}
+		rd.deleteDups1(strLinkedList.getHead());
+		
 	}
 
 }
