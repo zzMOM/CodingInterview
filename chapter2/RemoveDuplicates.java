@@ -9,14 +9,16 @@ import java.util.LinkedList;
 public class RemoveDuplicates {
 
 	public void deleteDups1(Node n){
-		Hashtable table = new Hashtable();
+		Hashtable<Object, Boolean> table = new Hashtable<Object, Boolean>();
 		Node previous = null;
 		while(n != null){
-			if(table.contains(n.elem)){
+			if(table.containsKey(n.elem.toString().charAt(0))){
 				previous.next = n.next;
+				//System.out.print(n.elem.toString() + " ");
 			} else {
-				table.put(n.elem, true);
+				table.put(n.elem.toString().charAt(0), true);
 				previous = n;
+				System.out.print(n.elem.toString() + " ");
 			}
 			n = n.next;
 		}
