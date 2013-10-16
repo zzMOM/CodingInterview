@@ -15,8 +15,13 @@ public class MainTest {
 		
 		//RemoveDuplicates
 		RemoveDuplicates rd = new RemoveDuplicates();
-		rd.deleteDups1(strLinkedList.getHead());
+		//rd.deleteDups2(strLinkedList.getHead());
 		
+		//KtoLastElem
+		KtoLastElem kle = new KtoLastElem();
+		kle.ktoLast1(strLinkedList.getHead(), 6);
+		Node k = kle.ktoLast3(strLinkedList.getHead(), 6);
+		System.out.print(k.elem.toString());
 	}
 
 }
