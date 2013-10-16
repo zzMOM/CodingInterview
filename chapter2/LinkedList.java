@@ -14,17 +14,19 @@ public class LinkedList<E> {
 	
 	public void addAtEnd(E elem){
 		if(head == null){
-			head = tail = new Node(elem);
+			head = tail = new Node();
 			head.elem = elem;
 			head.next = tail;
 			tail = head;
 		} else {
-			tail.next = new Node(elem);
+			tail.next = new Node();
 			tail = tail.next;
 			tail.elem = elem;
 		}
 		counter++;
 	}
 	
-	
+	public Node<E> getHead(){
+		return head;
+	}
 }
