@@ -21,7 +21,15 @@ public class MainTest {
 		KtoLastElem kle = new KtoLastElem();
 		kle.ktoLast1(strLinkedList.getHead(), 6);
 		Node k = kle.ktoLast3(strLinkedList.getHead(), 6);
-		System.out.print(k.elem.toString());
+		//System.out.print(k.elem.toString());
+		
+		//PartitionLinkedList
+		PartitionLinkedList pll = new PartitionLinkedList();
+		Node tempNode = pll.partition(strLinkedList.getHead(), 't');
+		/*while(tempNode != null){
+			System.out.print(tempNode.elem.toString().charAt(0)+ " ");
+			tempNode = tempNode.next;
+		}*/
 	}
 
 }
