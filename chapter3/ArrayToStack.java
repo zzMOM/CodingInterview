@@ -1,6 +1,14 @@
 package chapter3;
 
+/**
+ * Describe how you could use a single array to implement three stacks.
+ * @author weiwu
+ *
+ */
 public class ArrayToStack {
+	/*
+	 * Solution #1:Fiexde Division
+	 */
 	int stackSize = 100;
 	int[] buffer = new int[stackSize * 3];
 	int[] stackPointer = {-1, -1, -1};
