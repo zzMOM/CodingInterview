@@ -101,6 +101,16 @@ public class PalindromeLinkedList {
 		}
 	}
 	
+	public int listSize(Node head){
+		Node n = head;
+		int size = 0;
+		while(n != null){
+			size++;
+			n = n.next;
+		}
+		return size;
+	}
+	
 	public boolean isPalindrome3(Node head){
 		Result p = isPalindromeRec(head, listSize(head));
 		return p.result;
