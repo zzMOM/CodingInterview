@@ -11,7 +11,7 @@ public class Hand<T extends Card> {
      * Discard all cards from the hand, making the hand empty.
      */
     public void clear(){
-    	
+    	cards.removeAll(cards);
     }
     
     /*
@@ -26,7 +26,7 @@ public class Hand<T extends Card> {
      * If the specified card is in the hand, it is removed.
      */
     public void removeCard(T c){
-    	
+    	cards.remove(c);
     }
 
     /*
@@ -36,14 +36,14 @@ public class Hand<T extends Card> {
      *    position does not exist in the hand.
      */
     public void removeCard(int position){
-    	
+    	cards.remove(position);
     }
 
     /*
      * Return the number of cards in the hand.
      */
     public int getCardCount(){
-    	return 0;
+    	return cards.size();
     }
 
     /*
@@ -53,7 +53,7 @@ public class Hand<T extends Card> {
      *    position does not exist in the hand.
      */
     public Card getCard(int position){
-    	return null;
+    	return cards.get(position);
     }
 
     /*
