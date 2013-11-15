@@ -3,23 +3,16 @@ package deckofcards;
 import java.util.ArrayList;
 
 public class PlayBlackJack {
-	protected ArrayList<BlackJackCard> fullCards = new ArrayList<BlackJackCard>();
+	protected ArrayList<BlackJackCard> fullCards;
 	protected BlackJackHand dealer = new BlackJackHand();
 	protected BlackJackHand player1 = new BlackJackHand();
 			
 	
-	public PlayBlackJack(){}
+	public PlayBlackJack(ArrayList<BlackJackCard> fullCards){
+		this.fullCards = fullCards;
+	}
 	
 	public void play(){
-		//Black Jack, uses four decks of card, exclude Joker.
-		ADeckOfCards dc = new ADeckOfCards();
-		for(int i = 0; i < 4; i++){
-			for(Card c : dc.getADeckOfCards()){
-				if(!c.suit.equals(Suit.Joker)){
-					fullCards.add((BlackJackCard)c);
-				}
-			}
-		}
 		//create Deck 
 		Deck deck = new Deck(fullCards);
 		deck.shuffle();//shuffle fullCards
@@ -28,9 +21,13 @@ public class PlayBlackJack {
 		//while(deck.cardsLeft() >= 10){
 			//deal card
 			dealer.addCard((BlackJackCard) deck.dealCard());
+			System.out.println("dealer:" + dealer.getCard(0).faceValue);
 			player1.addCard((BlackJackCard) deck.dealCard());
+			System.out.println("player1:" + player1.getCard(0).faceValue);
 			dealer.addCard((BlackJackCard) deck.dealCard());
+			System.out.println("dealer:" + dealer.getCard(1).faceValue);
 			player1.addCard((BlackJackCard) deck.dealCard());
+			System.out.println("player1:" + player1.getCard(1).faceValue);
 			
 			dealer.score();
 			player1.score();
