@@ -3,23 +3,21 @@ package deckofcards;
 import java.util.ArrayList;
 
 public class BlackJackHand extends Hand<BlackJackCard>{
+	
 	public int score(){
-		ArrayList<Integer> scores = possibleScores();
-		int maxUnder = Integer.MIN_VALUE;
-		int minOver = Integer.MAX_VALUE;
-		for(int score : scores){
-			if(score > 21 && score < minOver){
-				minOver = score;
-			} else if(score <= 21 && score > maxUnder){
-				maxUnder = score;
+		int scores = 0;
+		for(int i = 0; i < cards.size(); i++){
+			int temp = cards.get(i).faceValue;
+			if(temp >= 10){
+				scores += 10;
+			} else {
+				scores += temp;
 			}
 		}
-		return maxUnder == Integer.MIN_VALUE ? minOver : maxUnder;
+		
+		return scores;
 	}
 	
-	private ArrayList<Integer> possibleScores(){
-		return null;
-	}
 	
 	public boolean busted(){
 		return (score() > 21);
