@@ -25,6 +25,8 @@ public class Call {
 		caller.setCallerName(name);
 	}
 	
-	public void reply(){}
+	public void reply(String message){}
 	public void disconnect(){}
+	public Rank getRank(){ return null; }
+	public void setRank(Rank r){ rank = r; }
 }
