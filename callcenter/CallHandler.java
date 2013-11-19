@@ -13,10 +13,10 @@ public class CallHandler {
 	 * level 2 - director
 	 */
 	
-	/*Initialize 10 respondents, 4 manager, 2 director*/
+	/*Initialize 10 respondents, 4 manager, 2 director
 	private final int NUM_RESPONDENTS = 10;
 	private final int NUM_MANAGER = 4;
-	private final int NUM_DIRECTOR = 2;
+	private final int NUM_DIRECTOR = 2;*/
 	
 	/*queues for each call's rank*/
 	ArrayList<ArrayList<Call>> callQueues = new ArrayList<ArrayList<Call>>();
@@ -48,6 +48,10 @@ public class CallHandler {
 		employeeLevels.add(respondentList);
 		employeeLevels.add(managerList);
 		employeeLevels.add(directorList);
+		
+		callQueues.add(respondentCallList);
+		callQueues.add(managerCallList);
+		callQueues.add(directorCallList);
 	}
 	
 	/*Get instance of singleton class*/
@@ -87,15 +91,33 @@ public class CallHandler {
 	public void dispatchCall(Call call){
 		//Try to route the call to an employee with the minimal rank*/
 		Employee emp = getHandlerForCall(call);
+		
 		if(emp != null){
-			emp.receiveCall(call);
-			call.setHandler(emp);
-			//move the current handler to the end of list, keep the available employee in the front of list
-			employeeLevels.get(call.getRank().getValue()).add(emp);
-			employeeLevels.get(call.getRank().getValue()).remove(0);
+			while(true){
+				call.setHandler(emp);
+				emp.setCurrentCall(call);
+				//move the current handler to the end of list, keep the available employee in the front of list
+				employeeLevels.get(call.getRank().getValue()).add(emp);
+				employeeLevels.get(call.getRank().getValue()).remove(0);
+				emp.receiveCall(call);
+				if(emp.isCallCompleted()){
+					System.out.println(call.getHandler().getName() + "-" + call.getHandler().getJobTitle() + " solved the problems!");
+					break;
+				} else {
+					System.out.println(call.getHandler().getName() + "-" + call.getHandler().getJobTitle() + " can't solve the problems!");
+					if(call.getHandler().getRank().getValue() == 2){
+						System.out.println("Add current problems or questions to backup! Complete call!");
+						break;
+					} else {
+						emp.escalateAndReassign(call);
+						dispatchCall(call);
+					}
+				}
+			}
 		} else {
 			//place the call into call queue according to its rank
 			call.reply("Please wait for free employee to reply");
+			System.out.println(call.getCaller().getPhoneNumber() + "is waiting for the next available respondent!");
 			callQueues.get(call.getRank().getValue()).add(call);
 		}
 	}
