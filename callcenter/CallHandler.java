@@ -93,27 +93,7 @@ public class CallHandler {
 		Employee emp = getHandlerForCall(call);
 		
 		if(emp != null){
-			while(true){
-				call.setHandler(emp);
-				emp.setCurrentCall(call);
-				//move the current handler to the end of list, keep the available employee in the front of list
-				employeeLevels.get(call.getRank().getValue()).add(emp);
-				employeeLevels.get(call.getRank().getValue()).remove(0);
-				emp.receiveCall(call);
-				if(emp.isCallCompleted()){
-					System.out.println(call.getHandler().getName() + "-" + call.getHandler().getJobTitle() + " solved the problems!");
-					break;
-				} else {
-					System.out.println(call.getHandler().getName() + "-" + call.getHandler().getJobTitle() + " can't solve the problems!");
-					if(call.getHandler().getRank().getValue() == 2){
-						System.out.println("Add current problems or questions to backup! Complete call!");
-						break;
-					} else {
-						emp.escalateAndReassign(call);
-						dispatchCall(call);
-					}
-				}
-			}
+			processingCall(call, emp);
 		} else {
 			//place the call into call queue according to its rank
 			call.reply("Please wait for free employee to reply");
@@ -122,10 +102,73 @@ public class CallHandler {
 		}
 	}
 	
+	private void processingCall(Call call, Employee emp){
+		call.setHandler(emp);
+		emp.setCurrentCall(call);
+		
+		//move the current handler to the end of list, keep the available employee in the front of list
+		employeeLevels.get(call.getRank().getValue()).add(emp);
+		employeeLevels.get(call.getRank().getValue()).remove(0);
+		emp.receiveCall(call);
+		
+		
+		if(emp.isCallCompleted()){
+			//if the problems were solved, print message
+			System.out.println(call.getHandler().getName() + "-" + call.getHandler().getJobTitle() + " solved the problems!");
+			//employee is free now, check the callQuee, 
+			//if there is no call waiting, move the free employ to the front of list
+			if(!assignCall(emp)){
+				int index = employeeLevels.get(call.getRank().getValue()).indexOf(emp);
+				Employee temp = employeeLevels.get(call.getRank().getValue()).get(index);
+				employeeLevels.get(call.getRank().getValue()).remove(index);
+				employeeLevels.get(call.getRank().getValue()).add(0, temp);;
+			}
+			return;
+		} else {
+			System.out.println(call.getHandler().getName() + "-" + call.getHandler().getJobTitle() + " can't solve the problems!");
+			if(call.getHandler().getRank().getValue() == 2){
+				System.out.println("Add current problems or questions to backup! Complete call!");
+				//employee is free now, check the callQuee, 
+				//if there is no call waiting, move the free employ to the front of list
+				if(!assignCall(emp)){
+					int index = employeeLevels.get(call.getRank().getValue()).indexOf(emp);
+					Employee temp = employeeLevels.get(call.getRank().getValue()).get(index);
+					employeeLevels.get(call.getRank().getValue()).remove(index);
+					employeeLevels.get(call.getRank().getValue()).add(0, temp);;
+				}
+				return;
+			} else {
+				//if problems were not solved, it will transfer the call to next step
+				emp.escalateAndReassign(call);
+				//current employee is free now, check the callQuee, 
+				//if there is no call waiting, move the free employ to the front of list
+				if(!assignCall(emp)){
+					int index = employeeLevels.get(call.getRank().getValue()).indexOf(emp);
+					Employee temp = employeeLevels.get(call.getRank().getValue()).get(index);
+					employeeLevels.get(call.getRank().getValue()).remove(index);
+					employeeLevels.get(call.getRank().getValue()).add(0, temp);;
+				}
+				//change rank, transfer
+				call.increaseRank();
+				dispatchCall(call);
+			}
+		}
+			
+	}
+	
 	/*An employee got free. Look for a waiting call that employee can serve
 	 * Return true if assigned a call, false otherwise
 	 */
 	public boolean assignCall(Employee emp){ 
-		return (!emp.isFree());
+		int index = emp.getRank().getValue();
+		
+		if(callQueues.get(index).size() != 0){
+			Call tempCall = callQueues.get(index).get(0);
+			tempCall.setHandler(emp);
+			processingCall(tempCall, emp);
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
