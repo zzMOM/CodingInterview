@@ -32,7 +32,7 @@ public abstract class Employee {
 	public void receiveCall(Call call){
 		
 		Random r = new Random();
-		int seconds = r.nextInt(50) * 100;
+		int seconds = r.nextInt(100) * 100;
 		try {
 		    System.out.println(call.getCaller().getPhoneNumber() + " and " + call.getHandler().getName()
 		    			+ " - " + call.getHandler().getJobTitle() + " conntected! ");
@@ -58,7 +58,6 @@ public abstract class Employee {
 	
 	/*The issue is not resolved. Escalate the call, and assign a new call to the employee*/
 	public void escalateAndReassign(Call call){
-		call.increaseRank();
 		//clear current handler for this call, and set current employee free
 		currentCall = null;
 		call.setHandler(null);
