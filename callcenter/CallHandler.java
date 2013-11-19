@@ -33,13 +33,14 @@ public class CallHandler {
 	
 	public void getEmloyeeLevelList(ArrayList<Employee> e){
 		for(int i = 0; i < e.size(); i++){
-			if(e.get(i).getRank().getValue() == 0){
+			int r = e.get(i).getRank().getValue();
+			if(r == 0){
 				respondentList.add(e.get(i));
 				//employeeLevels.get(0).add(e.get(i));
-			} else if(e.get(i).getRank().getValue() == 1){
+			} else if(r == 1){
 				managerList.add(e.get(i));
 				//employeeLevels.get(1).add(e.get(i));
-			} else if(e.get(i).getRank().getValue() == 2){
+			} else if(r == 2){
 				directorList.add(e.get(i));
 				//employeeLevels.get(3).add(e.get(i));
 			}
