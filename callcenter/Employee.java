@@ -30,31 +30,26 @@ public abstract class Employee {
 	
 	/*start the conversation*/
 	public void receiveCall(Call call){
-		currentCall = call;
+		
 		Random r = new Random();
-		int seconds = r.nextInt(100) * 1000;
+		int seconds = r.nextInt(50) * 100;
 		try {
+		    System.out.println(call.getCaller().getPhoneNumber() + " and " + call.getHandler().getName()
+		    			+ " - " + call.getHandler().getJobTitle() + " conntected! ");
 		    Thread.sleep(seconds);
-		    System.out.println(call.getCaller().getPhoneNumber() + " and " 
-		    		+ call.getHandler().name + " title: " + call.getHandler().jobTitle + " conntected! ");
 		} catch(InterruptedException ex) {
 		    Thread.currentThread().interrupt();
-		}
-		boolean isCompleted = isCallCompleted();
-		if(isCompleted){
-			System.out.println(call.getHandler().name + " title: " + call.getHandler().jobTitle + "solved the problems!");
-		} else {
-			System.out.println(call.getHandler().name + " title: " + call.getHandler().jobTitle + "can't solve the problems!");
-			escalateAndReassign(call);
 		}
 	}
 	
 	/*the issue is resolved, finish the call*/
-	private boolean isCallCompleted(){
-		System.out.println("Solved or Not? Please enter 0 or 1, 0 - solved, 1 - not solved");
-		Random r = new Random();
-		int ans = r.nextInt(100) % 2;
+	public boolean isCallCompleted(){
+		//System.out.println("Solved or Not? Please enter 0 or 1, 0 - solved, 1 - not solved");
+		//Random r = new Random();
+		int ans = 1; //= r.nextInt(100) % 2;
 		if(ans == 0){
+			//complete set current employee free
+			currentCall = null;
 			return true;
 		} else {
 			return false;
@@ -64,8 +59,9 @@ public abstract class Employee {
 	/*The issue is not resolved. Escalate the call, and assign a new call to the employee*/
 	public void escalateAndReassign(Call call){
 		call.increaseRank();
-		CallHandler ch = new CallHandler();
-		ch.dispatchCall(call);
+		//clear current handler for this call, and set current employee free
+		currentCall = null;
+		call.setHandler(null);
 	}
 	
 	/*Assign a new call to an employee, if the employee is free*/
@@ -76,5 +72,9 @@ public abstract class Employee {
 	/*get rank*/
 	public Rank getRank(){
 		return rank;
+	}
+	
+	public void setCurrentCall(Call call){
+		currentCall = call;
 	}
 }
