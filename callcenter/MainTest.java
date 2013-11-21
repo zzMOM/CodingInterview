@@ -10,13 +10,13 @@ public class MainTest {
 		 * 10-Respondent, 4-Manager, 2-Director
 		 */
 		ArrayList<Employee> employeeList = new ArrayList<Employee>();
-		for(int i = 0; i < 16; i++){
+		for(int i = 0; i < 6; i++){
 			int id = 10000 + i;
 			int name = 65 + i;
-			if(i < 10){
+			if(i < 3){
 				Respondent e = new Respondent(Integer.toString(id), (String)(Character.toString((char)name)), "Respondent");
 				employeeList.add(e);
-			} else if (i < 14){
+			} else if (i < 5){
 				Manager e = new Manager(Integer.toString(id), (String)(Character.toString((char)name)), "Manager");
 				employeeList.add(e);
 			} else {
@@ -29,7 +29,7 @@ public class MainTest {
 		CallHandler callHandler = new CallHandler();
 		callHandler.getEmloyeeLevelList(employeeList);
 		//multithreading call service, assume 20 calls
-		for(int i = 0; i < 3; i++){
+		for(int i = 0; i < 2; i++){
 			new CallCustomerService(callHandler);
 		}
 		
