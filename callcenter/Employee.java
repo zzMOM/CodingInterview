@@ -34,8 +34,8 @@ public abstract class Employee {
 		Random r = new Random();
 		int seconds = r.nextInt(100) * 100;
 		try {
-		    System.out.println(call.getCaller().getPhoneNumber() + " and " + call.getHandler().getName()
-		    			+ " - " + call.getHandler().getJobTitle() + " conntected! ");
+		    System.out.println(System.currentTimeMillis() + " : " + call.getCaller().getPhoneNumber() 
+		    		+ " and " + call.getHandler().getName() + " - " + call.getHandler().getJobTitle() + " conntected! ");
 		    Thread.sleep(seconds);
 		} catch(InterruptedException ex) {
 		    Thread.currentThread().interrupt();
