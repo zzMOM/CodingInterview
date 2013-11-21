@@ -67,14 +67,14 @@ public class CallHandler {
 		Employee emp = null;
 		Rank r;
 		r = call.getRank();
-		if(r.getValue() == 0){
+		if(r.getValue() == 0 && employeeLevels.get(0).get(0).isFree()){
 			emp = employeeLevels.get(0).get(0);
-		} else if(r.getValue() == 1){
+		} else if(r.getValue() == 1 && employeeLevels.get(1).get(0).isFree()){
 			emp = employeeLevels.get(1).get(0);
-			if(emp == null){
+			if(emp == null && employeeLevels.get(2).get(0).isFree()){
 				emp = employeeLevels.get(2).get(0);
 			}
-		} else if(r.getValue() == 2){
+		} else if(r.getValue() == 2  && employeeLevels.get(2).get(0).isFree()){
 			emp = employeeLevels.get(2).get(0);
 		}
 		return emp;
@@ -97,7 +97,8 @@ public class CallHandler {
 		} else {
 			//place the call into call queue according to its rank
 			call.reply("Please wait for free employee to reply");
-			System.out.println(call.getCaller().getPhoneNumber() + "is waiting for the next available respondent!");
+			System.out.println(System.currentTimeMillis() + " : " + 
+					call.getCaller().getPhoneNumber() + "is waiting for the next available respondent!");
 			callQueues.get(call.getRank().getValue()).add(call);
 		}
 	}
@@ -107,14 +108,15 @@ public class CallHandler {
 		emp.setCurrentCall(call);
 		
 		//move the current handler to the end of list, keep the available employee in the front of list
-		employeeLevels.get(call.getRank().getValue()).add(emp);
 		employeeLevels.get(call.getRank().getValue()).remove(0);
+		employeeLevels.get(call.getRank().getValue()).add(emp);
 		emp.receiveCall(call);
 		
 		
 		if(emp.isCallCompleted()){
 			//if the problems were solved, print message
-			System.out.println(call.getHandler().getName() + "-" + call.getHandler().getJobTitle() + " solved the problems!");
+			System.out.println(System.currentTimeMillis() + " : "
+					+ call.getHandler().getName() + "-" + call.getHandler().getJobTitle() + " solved the problems!");
 			//employee is free now, check the callQuee, 
 			//if there is no call waiting, move the free employ to the front of list
 			if(!assignCall(emp)){
@@ -125,7 +127,8 @@ public class CallHandler {
 			}
 			return;
 		} else {
-			System.out.println(call.getHandler().getName() + "-" + call.getHandler().getJobTitle() + " can't solve the problems!");
+			System.out.println(System.currentTimeMillis() + " : " 
+					+ call.getHandler().getName() + "-" + call.getHandler().getJobTitle() + " can't solve the problems!");
 			if(call.getHandler().getRank().getValue() == 2){
 				System.out.println("Add current problems or questions to backup! Complete call!");
 				//employee is free now, check the callQuee, 
